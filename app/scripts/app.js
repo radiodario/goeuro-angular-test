@@ -1,16 +1,16 @@
 'use strict';
 
-angular.module('goeuroAngularTestApp', [
+angular.module('goEuro', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'goEuro.search'
 ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/main.html'
       })
       .otherwise({
         redirectTo: '/'
