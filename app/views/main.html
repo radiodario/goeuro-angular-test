@@ -9,13 +9,15 @@
   </div>
 
 
+
+
     <form role="form" class="form-inline">
         <!-- locations -->
         <div class="form-group destination" ng-controller="DestinationSuggestionCtrl">
             <div is-open="status.isopen" class="dropdown">
-              <label class="sr-only" for="location">Location</label>
+              <label for="location">Location:</label>
               <input type="text" name="location" class="form-control dropdown-toggle" placeholder="enter location"
-                     ng-model="searchQuery" ng-change="search(searchQuery)">
+                     ng-model="searchQuery" ng-change="search(searchQuery)" required>
               </input>
               <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="destination in suggestions">
@@ -24,29 +26,31 @@
               </ul>
             </div>
         </div>
-        <div class="form-group date" ng-controller="DatePickerCtrl" ng-init="setInitialDate(14)">
+        <div class="form-group date" ng-controller="DatePickerCtrl" ng-init="setInitialDate(14, 'from')">
+          <label for="from">From:</label>
           <div class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="14" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="setDate(dt, 'from')"/>
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required close-text="Close" ng-change="setDate(dt, 'from')"/>
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </div>
         </div>
-        <div class="form-group date" ng-controller="DatePickerCtrl" ng-init="setInitialDate(21)">
+        <div class="form-group date" ng-controller="DatePickerCtrl" ng-init="setInitialDate(21, 'to')">
+          <label for="to">To:</label>
           <div class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="21" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="setDate(dt, 'to')"/>
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-required close-text="Close" ng-change="setDate(dt, 'to')"/>
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </div>
         </div>
-        <div class="form-group submit">
-          <div ng-controller="SearchQueryCtrl">
+        <div class="form-group submit" ng-controller="SearchQueryCtrl">
+          <div>
             <div class="settings" ng-show="valid">
               {{destination}} for {{days}} days
             </div>
           </div>
-          <button type="submit" class="btn btn-primary pull-right">GO</button>
+          <button type="submit" class="btn btn-primary pull-right" ng-disabled="validate()">GO</button>
         </div>
         <!-- dates -->
     </form>

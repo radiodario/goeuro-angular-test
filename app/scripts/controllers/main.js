@@ -74,7 +74,8 @@ app.controller('DestinationSuggestionCtrl', ['$rootScope', '$scope', '$http', fu
 
 
   $scope.setDestination = function(destination) {
-    $scope.searchQuery = destination.fullName;
+    $rootScope.searchQuery = destination.fullName;
+    $rootScope.destination = destination;
   };
 
 
@@ -112,7 +113,8 @@ app.controller('DestinationSuggestionCtrl', ['$rootScope', '$scope', '$http', fu
 
 
 app.controller('DatePickerCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
-  $scope.setInitialDate = function(dayOffset) {
+  $scope.setInitialDate = function(dayOffset, role) {
+    $scope.minDate = new Date();
     $scope.dayOffset = dayOffset;
     $scope.dt = new Date(new Date().getTime() + (dayOffset*24*60*60*1000));
   };
@@ -143,6 +145,37 @@ app.controller('DatePickerCtrl', ['$rootScope', '$scope', function($rootScope, $
 
 app.controller('SearchQueryCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
 
+  $scope.valid = false;
+
+  $scope.errorMessage = ''
+
+  $scope.validate = function() {
+
+    var locationSet = $rootScope.hasOwnProperty('destination');
+    if (!locationSet) {
+      $scope.errorMessage = 'you need to set a location'
+      return false;
+    }
+    var fromDateSet = $rootScope.hasOwnProperty('from');
+    if (!fromDateSet) {
+      $scope.errorMessage = 'you need to set a from date'
+      return false;
+    }
+    var toDateSet = $rootScope.hasOwnProperty('from');
+    if (!toDateSet) {
+      $scope.errorMessage = 'you need to set a to date'
+      return false;
+    }
+
+    if ($rootScope.to < $rootScope.from) {
+      $scope.errorMessage = 'To date cannot be earlier than from date'
+      return false;
+    }
+
+    $scope.valid = true;
+    return true;
+
+  };
 
 }]);
 

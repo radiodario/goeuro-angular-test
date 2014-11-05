@@ -60,6 +60,12 @@ body {
     padding-right: 0;
   }
 
+.form-group label {
+  line-height: 15px;
+  font-weight: 100;
+  color: white;
+}
+
 .form-group.date {
   width: 25%;
 }
